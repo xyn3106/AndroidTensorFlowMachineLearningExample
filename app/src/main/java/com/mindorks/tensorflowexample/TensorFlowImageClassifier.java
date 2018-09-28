@@ -21,6 +21,8 @@ import android.graphics.Bitmap;
 import android.support.v4.os.TraceCompat;
 import android.util.Log;
 
+import org.tensorflow.Graph;
+import org.tensorflow.Operation;
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
 import java.io.BufferedReader;
@@ -109,8 +111,11 @@ public class TensorFlowImageClassifier implements Classifier {
 
         c.inferenceInterface = new TensorFlowInferenceInterface(assetManager, modelFilename);
         // The shape of the output is [N, NUM_CLASSES], where N is the batch size.
-        int numClasses =
-                (int) c.inferenceInterface.graph().operation(outputName).output(0).shape().size(1);
+        Graph graph = c.inferenceInterface.graph();
+//        while ( graph.operations().hasNext()) {
+//            Log.e("TFF" , graph.operations().next().toString());  //<Const 'DecodeJpeg/contents'>  //<Placeholder 'input'>
+//        }
+        int numClasses = (int) graph.operation(outputName).output(0).shape().size(1);
         Log.i(TAG, "Read " + c.labels.size() + " labels, output layer size is " + numClasses);
 
         // Ideally, inputSize could have been retrieved from the shape of the input operation.  Alas,

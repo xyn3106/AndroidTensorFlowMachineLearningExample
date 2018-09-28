@@ -38,11 +38,11 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int INPUT_SIZE = 224;
-    private static final int IMAGE_MEAN = 117;
-    private static final float IMAGE_STD = 1;
-    private static final String INPUT_NAME = "input";
-    private static final String OUTPUT_NAME = "output";
+    private static final int INPUT_SIZE = 299;
+    private static final int IMAGE_MEAN = 128;
+    private static final float IMAGE_STD = 128;
+    private static final String INPUT_NAME = "Mul";
+    private static final String OUTPUT_NAME = "final_result";
 
     private static final String MODEL_FILE = "file:///android_asset/tensorflow_inception_graph.pb";
     private static final String LABEL_FILE =
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         btnToggleCamera = (Button) findViewById(R.id.btnToggleCamera);
         btnDetectObject = (Button) findViewById(R.id.btnDetectObject);
 
+        cameraView.setCropOutput(true);
         cameraView.addCameraKitListener(new CameraKitEventListener() {
             @Override
             public void onEvent(CameraKitEvent cameraKitEvent) {
